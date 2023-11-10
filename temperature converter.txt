@@ -1,0 +1,39 @@
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class TemperatureConverterActivity extends Activity {
+    private EditText celsiusInput;
+    private TextView resultText;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_temperature_converter);
+
+        celsiusInput = (EditText) findViewById(R.id.celsiusInput);
+        resultText = (TextView) findViewById(R.id.resultText);
+
+        Button convertButton = (Button) findViewById(R.id.convertButton);
+        convertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                convertTemperature();
+            }
+        });
+    }
+
+    private void convertTemperature() {
+        String celsiusText = celsiusInput.getText().toString();
+        if (!celsiusText.isEmpty()) {
+            double celsius = Double.parseDouble(celsiusText);
+            double fahrenheit = (celsius * 9 / 5) + 32;
+            resultText.setText(String.format("%.2f °F", fahrenheit));
+        } else {
+            resultText.setText("Enter a valid temperature in Celsius.");
+        }
+    }
+}
